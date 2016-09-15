@@ -1,3 +1,12 @@
+////////// This
+
+1. Fue la funcion llamada con new
+2  Fue la funcion llamada con call o apply
+3. Fue la funcion llamada con un objeto como contexto
+4. objeto global, Comportamiento Default
+
+
+
 // Constructores
 
 function House (address, floors, color) {
@@ -30,6 +39,9 @@ function Dog(name, age, color) {
   this.name = name
   this.age = age
   this.color = color
+  this.grow = function(amount) {
+    this.age = this.age + amount
+  }
 }
 
 // Usando New
@@ -37,5 +49,23 @@ function Dog(name, age, color) {
 var ozu = new Dog('ozu', 5, 'negro')
 
 // Default
-
+/// No use New mal mal mal
 var ozu = Dog('ozu', 5, 'negro')
+
+/// Invocando la funcion sobre un objeto
+
+ozu.grow() // This toma el valor de `ozu`
+
+
+/// Usando call y apply
+var ozu = new Dog('ozu', 5, 'negro')
+var moshi = {
+  age: 4
+}
+
+ozu.grow.call(moshi, 5)
+ozu.grow.aplly(moshi, [])
+
+
+
+
