@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Events</title>
+</head>
+<style>
+  #level1 {
+    background-color: blue;
+  }
+  #level2 {
+    background-color: green;
+  }
+  #level3 {
+    background-color: red;
+  }
+  #level4 {
+    background-color: pink;
+  }
+</style>
+<body>
+  <div id='level1'>
+    <h1>Primer Nivel</h1>
+    <div id=level2>
+      <p>
+        <a href="">Link</a>
+        <div id='level3'>
+          <div id='level4'>Hola</div>
+        </div>
+        <div>Sin ID</div>
+      </p>
+    </div>
+  </div>
+</body>
+<script>
+  var level1 = document.getElementById('level1')
+  var level2 = document.getElementById('level2')
+  var level3 = document.getElementById('level3')
+  var level4 = document.getElementById('level4')
+
+  function handler (e) {
+    if (e.target.nodeName === 'A') {
+      e.preventDefault()
+    }
+      console.log('Target',e.target)
+      console.log('currentTarget',e.currentTarget)
+  }
+
+   function handler4 (e) {
+     console.log('Hello')
+     e.stopPropagation()
+     e.stopImmediatePropagation()
+   }
+
+    function handler42 (e) {
+     console.log('Second Event')
+   }
+
+
+
+  level3.addEventListener('click', handler, false)
+  level4.addEventListener('click', handler4)
+  level4.addEventListener('click', handler42)
+</script>
+</html>
