@@ -101,12 +101,12 @@ function myForEach(array, callback) {
 
 function myMap(array, callback) {
   var result = []
-  myForEach(array, function(element, index){
-    result[index] = callback(element)
-  })
-  // for (var i = 0; i < array.length; i++){
-  //   result[i] = callback(array[i])
-  // }
+  // myForEach(array, function(element, index){
+  //   result[index] = callback(element)
+  // })
+  for (var i = 0; i < array.length; i++){
+    result[i] = callback(array[i])
+  }
   return result
 }
 
@@ -203,10 +203,82 @@ function once(callback) {
 
 
 
+function sayName(name) {
+   console.log(name)
+}
+
+function higherOrderFunction(callback, name) {
+  callback('juan')
+}
+
+
+[1,2,3].forEach(function(elem) {
+  console.log(elem)
+})
+
+higherOrderFunction(function(name){ console.log(name+'le gusta el cafe')}, 'angie')
+higherOrderFunction(sayName, 'juan')
 
 
 
 
 
+function myMap(array, callback) {
+  var result = []
+  for (var i = 0; i < array.length; i++) {
+     var callbackReturn = callback(array[i])
+     result.push(callbackReturn)
+  }
+  return result
+}
 
+function myFilter(array, callback) {
+  var result = []
+  for (var i = 0; i < array.length; i++) {
+    var callbackReturn = callback(array[i])
+    if (callbackReturn) {
+      result.push(callbackReturn)
+    }
+  }
+  return result
+}
+
+myFilter([1,2,3], function(num){
+  return num % 2 === 0
+})
+
+
+[1,2,3,4,5].reduce(function(accomulator, num){
+  if (num % 2 === 0) {
+    accomulator.push(num)
+    return accomulator
+  } else {
+    return accomulator
+  }
+},[])
+
+[1,2,3,4].reduce(function(accomulator, num){
+  num *= 2
+  accomulator.push(num)
+  return accomulator
+}, [])
+
+
+[1,2,3,4,5,6].map(function(num){
+  return num * 2
+}).filter(function(num){
+  return num % 2 === 0
+}).reduce(function(accomulator, num){
+  return accomulator + num
+}, 0)
+
+function myReduce(array, callback, initial) {
+  for (var i = 0; i < array.length; i++) {
+    initial = callback(initial, array[i])
+  }
+  return initial
+}
+
+
+var array = [1,2,3]
 

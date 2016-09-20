@@ -5,61 +5,124 @@
   <title>Events</title>
 </head>
 <style>
-  #level1 {
-    background-color: blue;
-  }
-  #level2 {
+  ul {
     background-color: green;
-  }
-  #level3 {
-    background-color: red;
-  }
-  #level4 {
-    background-color: pink;
   }
 </style>
 <body>
-  <div id='level1'>
-    <h1>Primer Nivel</h1>
-    <div id=level2>
-      <p>
-        <a href="">Link</a>
-        <div id='level3'>
-          <div id='level4'>Hola</div>
-        </div>
-        <div>Sin ID</div>
-      </p>
-    </div>
-  </div>
+  <ul id="breeds">
+    <li id='first-li'><a href="#doberman">Doberman</a></li>
+    <li><a href="http://tunaranja.co">Tu Naranja</a></li>
+    <li><a href="#boxer">Boxer</a></li>
+  </ul>
 </body>
 <script>
-  var level1 = document.getElementById('level1')
-  var level2 = document.getElementById('level2')
-  var level3 = document.getElementById('level3')
-  var level4 = document.getElementById('level4')
+  $("[href='http://tunaranja.co']")
+    .addEventListener('click', function(event){
+    event.preventDefault()
+  })
+  document.getElementById('breeds')
+     .addEventListener('mouseenter', function(ev) {
+      this.style.backgroundColor = 'mediumaquamarine'
+    this; //-> element with id "breeds"
 
-  function handler (e) {
-    if (e.target.nodeName === 'A') {
-      e.preventDefault()
-    }
-      console.log('Target',e.target)
-      console.log('currentTarget',e.currentTarget)
+  }, false);
+
+  document.getElementById('breeds')
+    .addEventListener('mouseleave',function(ev) {
+      this.style.fontFamily = 'helvetica'
+    this; //-> element with id "breeds"
+
+  }, false)
+
+
+  var breeds = document.getElementById('breeds');
+
+  //register a simple handler
+  breeds.addEventListener('click', function(ev) {
+    console.log('clicked!');
+  }, false);
+
+  //removing a handler that looks identical
+  breeds.removeEventListener('click', function(ev) {
+    console.log('clicked!');
+  }, false);
+
+  ///////// Do this instead
+
+  var handler = function(ev) {
+    console.log('clicked!');
   }
 
-   function handler4 (e) {
-     console.log('Hello')
-     e.stopPropagation()
-     e.stopImmediatePropagation()
-   }
+  breeds = document.getElementById('breeds');
 
-    function handler42 (e) {
-     console.log('Second Event')
-   }
+  //register a simple handler
+  breeds.addEventListener('click', handler, false);
+
+  //and remove the registration
+  breeds.removeEventListener('click', handler, false);
+
+  /////////////////////////// Event Object
+
+  var handler = function() {
+    console.log(event)
 
 
+    // ev.preventDefault();
+    // ev.stopPropagation();
+  }
 
-  level3.addEventListener('click', handler, false)
-  level4.addEventListener('click', handler4)
-  level4.addEventListener('click', handler42)
+  document.getElementById('breeds')
+    .addEventListener('click', handler, false);
+
+  ///////// Default Actions
+
+  /*
+    - Submit
+    - click
+    - mouseDown
+    - contextMenu
+    - keyDown/keypress
+  */
+
+  var click_handler = function(ev) {
+    //stops window.location from being set
+    ev.preventDefault();
+  };
+
+  breeds.addEventListener('click', function(ev) {
+  //click, keypress, etc
+    ev.type;
+
+    //element event was invoked on
+    ev.target;
+
+    //current element in propagation
+    ev.currentTarget;
+
+    ev.timestamp;
+    ev.bubbles;
+    ev.cancelable;
+    ev.eventPhase;
+  }, false);
+
+
+  ///// Delegation Propagation
+
+
+  document.body.addEventListener("click",
+    function(ev){
+
+      if(ev.target.nodeName === "A") {
+        console.log("clicked on an anchor!");
+        // do stuff!
+      }
+
+    }, false);
+
+  /// With jquery
+  $('body').on('click','div', function() {
+    console.log('Here I am!');
+  });
 </script>
 </html>
