@@ -32,6 +32,7 @@ filterOut = function(s) {
 
 	return false;
 },
+
 lastEvent = null,
 animate = function(selector) {
 	$(selector).removeClass()
