@@ -1,8 +1,15 @@
+function hola (){
+  console.log('hola')
+}
+var nombre = 'juan'
+
+function private () {
+  console.log("Soy privada")
+}
 
 module.exports = {
-  saludo: 'hola como estas',
-  add: function(a,b) {
-    return a + b
-  }
+  nombre: nombre,
+  hola: hola
 }
+
 
