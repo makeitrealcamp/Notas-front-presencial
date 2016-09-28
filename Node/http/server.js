@@ -23,6 +23,11 @@ var server = http.createServer(function(req, res){
         var file = file.toString().trim()
         res.end(file)
       })
+    } else if (req.url.match(/\.jpg$/)) {
+      res.writeHead(200, {"Content-Type": "image/jpeg"});
+      fs.readFile(path.join(__dirname, req.url), function(err, file){
+        res.end(file)
+      })
     }
   } else if (req.method === "POST") {
     var body = ''
