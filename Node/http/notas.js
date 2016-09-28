@@ -30,6 +30,7 @@ mongoClient.connect('mongodb://localhost:27017/node-intro', function(err, db){
         fileStream.pipe(res)
       } else if (req.url === '/students') {
         // Buscamos en la base de datos a todos los estudiantes
+
         db.collection('students').find().sort({name: 1}).toArray(function(err, students) {
           console.log(students)
           // Enviamos el array de estudiantes al cliente

@@ -98,6 +98,8 @@ db.movieDetails.find({actors: [
     "Jason Robards",
     "Charles Bronson"
 ]})
+
+
 db.movieDetails.find({actors: {$all: ['Henry Fonda', 'Charles Bronson']}})
 db.movieDetails.find({'actors.0': 'Claudia Cardinale'})
 db.movieDetails.find({'actors': 'Claudia Cardinale'})
@@ -110,7 +112,7 @@ db.movieDetails.find({'tomato.consensus': 'A landmark Sergio Leone spaghetti wes
 
 //Update Methods
 updateOne( {selection_critiria}, {update_operation} )
-updateOne({ title: “the martian” }, { set$ { poster: “some poster” } })
+db.movieDetails.updateOne({ title: 'the martian' }, { $set: { poster: 'some poster' } })
 // - updateMany
 // - upserts
 // - replaceOne
