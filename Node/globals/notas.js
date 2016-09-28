@@ -53,7 +53,6 @@ console.log(process.argv)
 var nameIndex = process.argv.indexOf('--name')
 var name = process.argv[nameIndex + 1]
 console.log(name)
-process.stdout.write(process.argv[])
 process.stdout.write(`> Hola ${process.argv} :`)
 process.stdin.on('data', function(data){
   var nombre = data.toString().trim()
