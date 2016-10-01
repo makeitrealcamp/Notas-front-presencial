@@ -10,6 +10,7 @@
     </div>
     <ul>
       {{#if currentUser }}
+        <li>{{currentUser.name}}</li>
         <li>
           <form id="sign-out" action="/sessions/delete" method="post">
             <input type="submit" value="Sign Out">

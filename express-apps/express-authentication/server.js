@@ -71,7 +71,7 @@ mongoClient.connect('mongodb://localhost:27017/students', function(err, db) {
       if (student) {
         bcrypt.compare(req.body.password, student.password, function(err, valid) {
           if (valid) {
-            req.session.userId = student._id
+            req.session.studentId = student._id
             res.redirect('/')
           } else {
             res.render('sessions/new', {error: 'Wrong Password'})
