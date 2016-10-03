@@ -2,17 +2,17 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var mongoClient = require('mongodb').MongoClient
 var ObjectId = require('mongodb').ObjectID
+var engine = require('express-handlebars')
 var bcrypt = require('bcrypt');
 var session = require('express-session')
-var engine = require('express-handlebars')
 
 var app = express()
 
 /// Configuracion
-app.use('/public', express.static(__dirname + '/public'));
+app.use('/public', express.static(__dirname + '/public'))
 app.use(bodyParser.urlencoded({extended: true}))
-app.engine('handlebars', engine({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+app.engine('handlebars', engine({defaultLayout: 'main'}))
+app.set('view engine', 'handlebars')
 app.set('views', __dirname + '/views')
 
 app.use(session({
@@ -37,11 +37,15 @@ mongoClient.connect('mongodb://localhost:27017/students', function(err, db) {
     }
   })
 
+
   /// Students Routes
   app.get('/', function(req, res, next) {
-    console.log(req.student)
+    // console.log(req.student)
     db.collection('students').find().toArray(function(err, students) {
-      res.render('index', {students: students, currentUser: req.student})
+      res.render('index', {
+        students: students,
+        currentUser: req.student
+      })
     })
   })
 
@@ -54,6 +58,10 @@ mongoClient.connect('mongodb://localhost:27017/students', function(err, db) {
     bcrypt.hash(student.password, 8, function(err, hash) {
       student.password = hash
       db.collection('students').insertOne(student, function(err, result){
+        if (err) {
+          res.render('students/new', {error: 'Email ya existe'})
+          return
+        }
         req.session.studentId = student._id
         res.redirect('/')
       })
@@ -67,7 +75,7 @@ mongoClient.connect('mongodb://localhost:27017/students', function(err, db) {
   })
 
   app.post('/sessions', function(req, res) {
-    db.collection('students').findOne({email: req.body.email}, function(err, student){
+      db.collection('students').findOne({email: req.body.email}, function(err, student){
       if (student) {
         bcrypt.compare(req.body.password, student.password, function(err, valid) {
           if (valid) {

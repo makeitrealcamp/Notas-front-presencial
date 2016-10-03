@@ -7,7 +7,6 @@
 
 .container h1 {
   font-size: 17pt;
-
 }
 
 nav {
@@ -77,5 +76,5 @@ form.quirks {
 #sign-out input {
   border:none;
   background:none;
-  font-weight: :bold;
+  font-weight: bold;
 }
