@@ -59,7 +59,6 @@ mongoClient.connect('mongodb://localhost:27017/students', function(err, db) {
   //// INDEX
   app.get('/students', function(req, res) {
     db.collection('students').find().toArray(function(err, students) {
-      console.log(students)
       // res.send(students)
       res.render('students/index', {students: students})
     })
