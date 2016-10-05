@@ -24,7 +24,7 @@ app.get('/', function(req, res) {
 app.post('/todos', function(req, res) {
   todos.push({todoItem: req.body.todoItem})
   // res.redirect('/')
-  res.json(todos)
+  res.render('partials/todos', {todos: todos, layout: false})
 })
 
 app.get('/todos/:id/delete', function(req, res) {

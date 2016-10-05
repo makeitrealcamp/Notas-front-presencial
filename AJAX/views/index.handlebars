@@ -1,35 +1,11 @@
 <h1>Hola mundo</h1>
 
-<ul id="todo-list">
-  {{#each todos}}
-    <li>
-      {{todoItem}}
-      <a class="deleteTodo" href="/todos/{{@index}}/delete">Borrar</a>
-    </li>
-  {{/each}}
-</ul>
+{{> todos }}
 
 <form id='create-todo' action="/todos" method='post'>
   <input type="text" name="todoItem">
   <input type="submit" value="Crear Todo">
 </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -42,7 +18,7 @@
   {{/each}}
 </ul> --}}
 
-
+ {{!-- {{> todos}} --}}
 {{!--
 <form id='create-todo' action="/todos" method='post'>
   <input type="text" name="todoItem">

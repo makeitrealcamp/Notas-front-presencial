@@ -20,17 +20,19 @@ $(document).ready(function(){
 
     // Manejar la respuesta
     request.done(function(response) {
+      console.log(response)
+       $('#todo-list').replaceWith(response)
       // Modificar el DOM
-      var ul = $('#todo-list')
-      ul.html('')
-      response.forEach(function(todo, index) {
-        ul.append(`
-          <li>
-            ${todo.todoItem}
-            <a class="deleteTodo" href="/todos/${index}/delete">Borrar</a>
-          </li>`
-        )
-      })
+      // var ul = $('#todo-list')
+      // ul.html('')
+      // response.forEach(function(todo, index) {
+      //   ul.append(`
+      //     <li>
+      //       ${todo.todoItem}
+      //       <a class="deleteTodo" href="/todos/${index}/delete">Borrar</a>
+      //     </li>`
+      //   )
+      // })
       // $('#todo-list').append(`<li>${response[response.length - 1].todoItem}</li>`)
     })
 
@@ -67,12 +69,6 @@ $(document).ready(function(){
   })
 
 })
-
-
-
-
-
-
 
 
 
