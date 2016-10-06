@@ -12,20 +12,58 @@
 //     )
 //   }
 // })
+///////
 
-const Hola = React.createClass({
+/////// Usando JSX
+// const Hola = React.createClass({
+//   render() {
+//     return (
+//       <div>
+//         <h1>Hola como estas {this.props.name}</h1>
+//         <h2>Soy el segundo h2</h2>
+//         <div>
+//           <p>Soy el p interior</p>
+//           <p>Soy el segundo p interior</p>
+//         </div>
+//       </div>
+//     )
+//   }
+// })
+///////
+
+
+// const Todo = React.createClass({
+//   render() {
+//     return(
+//       React.createElement('div', null,
+//         React.createElement('p', null, this.props.text)
+//       )
+//     )
+//   }
+// })
+
+const TodosList = React.createClass({
+  // getInitialState() {
+  //   todos: ['tender la cama', 'sacar el perro']
+  // },
   render() {
     return (
-      <div>
-        <h1>Hola como estas {this.props.name}</h1>
-        <h2>Soy el segundo h2</h2>
-        <div>
-          <p>Soy el p interior</p>
-          <p>Soy el segundo p interior</p>
-        </div>
-      </div>
+      React.createElement('ul', null,
+        this.state.todos.map((todo) => {
+          return React.createElement('li', null, 'hola')
+        })
+      )
     )
   }
 })
 
-ReactDOM.render(React.createElement(Hola, {name: 'Juan'}), document.getElementById('react-container'))
+
+
+
+
+
+
+
+
+
+ReactDOM.render(React.createElement('p', null, 'hola'), document.getElementById('react-container'))

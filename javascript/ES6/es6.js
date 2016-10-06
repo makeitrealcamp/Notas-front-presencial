@@ -24,7 +24,7 @@ var hola = function(name, age) {
 var hola  = (name, age) => {
   return 'hola'
 }
-obj
+
 var hola = name =>
 
 
