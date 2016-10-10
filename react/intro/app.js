@@ -1,20 +1,23 @@
 // console.log('Hola React')
 
-const Algo = React.createClass({
-  render() {
-    return (
-      React.createElement('div', {style: styles.container},
-        React.createElement('h1', null, `Hola como`),
-        React.createElement('h2', null, 'Soy el segundo h2'),
-        React.createElement('div', null,
-          React.createElement('p', {style: styles.interiorP}, 'Soy el p interior'),
-          React.createElement('p', null, 'Soy el Segundo p interior')
-        )
-      )
-    )
-  }
-})
+/// React Puro
+// const Algo = React.createClass({
+//   render() {
+//     return (
+//       React.createElement('div', {style: styles.container},
+//         React.createElement('h1', null, `Hola como`),
+//         React.createElement('h2', null, 'Soy el segundo h2'),
+//         React.createElement('div', null,
+//           React.createElement('p', {style: styles.interiorP}, 'Soy el p interior'),
+//           React.createElement('p', null, 'Soy el Segundo p interior')
+//         )
+//       )
+//     )
+//   }
+// })
 
+
+//////// Esto es JSX
 const Algo = React.createClass({
   render() {
     return(
@@ -35,14 +38,14 @@ ReactDOM.render(<Algo text='Vengo de aca' />, document.getElementById('react-con
 
 // const color = true
 
-// const styles = {
-//   container: {
-//     color: 'green'
-//   },
-//   interiorP: {
-//     color: 'red'
-//   }
-// }
+const styles = {
+  container: {
+    color: 'green'
+  },
+  interiorP: {
+    color: 'red'
+  }
+}
 
 // const Todo = React.createClass({
 //   render() {
