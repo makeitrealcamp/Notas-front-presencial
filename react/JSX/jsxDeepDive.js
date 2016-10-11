@@ -2,6 +2,7 @@
 ///// INTRO A JSX /////////
 /////////////////////////////////////////////////////////
 
+
 // React.createElement , crea un ReactNode que es el nodo que representa un node real del DOM en el Virtual DOM
 
 //React.createElement(Accepta 3 argumentos:)
@@ -25,7 +26,8 @@
 
 
 // Estos dos son equivalentes
-const boldElement = React.createElement('b', null, 'This is a bold Element')
+const boldElement = React.createElement('b', null, 'This is a bold Element')]
+
 const boldElementJSX = (<b>This is a bold Element</b>)
 
 // Estos dos son equivalents tambien y tienen props y childrens
@@ -48,6 +50,7 @@ const ulListJSX = (
 // Una diferencia entre los tags de HTML y los componentes de React esta en la forma en la que les damos nombres:
 
 ///// HTML tag  Aca el nombre htmlElement empieza sin Mayuscula por que un div es un elmento nativo de HTML:
+
 const htmlElement = (<div>Hola Mundo</div>)
 
 // Este se puede usar de la siguiente manera
@@ -57,7 +60,10 @@ const htmlElement = (<div>Hola Mundo</div>)
 
 const Message = React.creatClass({ // -> Nota que Message empieza con mayuscula
   render() {
-    return (<div>{this.props.text}</div>)
+    return (
+      <div>{this.props.text}</div>
+      {this.props.children} /// --> Hola mundo
+    )
   }
 })
 
@@ -79,9 +85,13 @@ const Message = React.creatClass({ // -> Nota que Message empieza con mayuscula
 // Para poder usar una expresion de javascript en los props/atributos de un componente tenemos que envolverla en {} ej:
 
 const warningLevel = 'debug'
-const AlertComponent = (<Alert
-                          color={warningLevel === 'debug' ? 'gray' : 'red'}
-                          log={true} />)
+
+
+
+const AlertComponent = (
+  <Alert
+    color={warningLevel === 'debug' ? 'gray' : 'red'}
+    log={true} />)
 
 // Aca estamos invocando/Renderizando un componente Alert al cual le pasamos el prop/atributo `color`. El valor de 'color' es una expresion de javascript (un operador ternario) el cual va a setear el valor de 'color' dependiendo de la variable 'warningLevel'.
 
@@ -108,14 +118,17 @@ const Menu = React.createClass({
     const userRole = this.props.userRole
     return (
       <ul>
-        {/* Este MenuLink lo pueden ver todos los usuarios */}
+        {/*Este MenuLink lo pueden ver todos los usuarios */}
         <MenuLink to="/blog"></MenuLink>
         {/* Si el user role es igual a 'admin' ponga el MenuLink que si pueden ver los admins*/}
+
         {userRole === 'admin' && renderAdminMenu()}
       </ul>
     )
   }
 })
+
+<ul>{loggedInUser ? <UserMenu /> : <LoginLink />
 
 /// Creamos menus y le pasamos diferentes valores para userRole
 <Menu userRole='admin'/> // Este va a mostrar el Menulink a los User Accounts
@@ -125,6 +138,7 @@ const Menu = React.createClass({
 // Tambien podemos usar un operador ternario para condicionalmente hacer un render de un component u otro:
 
 // Aca estamos creando un 'ul' el cual va a tener como children un UserMenu si el usuario esta loggeado o un LoginLink si no
+const loggedInUser = true || false
 const Menu = (<ul>{loggedInUser ? <UserMenu /> : <LoginLink />}</ul>)
 
 
@@ -135,7 +149,7 @@ const Menu = (<ul>{loggedInUser ? <UserMenu /> : <LoginLink />}</ul>)
 
 // En html podemos poner atributos dentro de tags que por solo ponerlos infieren que su valor es true ej:
 
-<input name='Name' disabled />
+<input name='Name'  required checked />
 
 // en JSX tenenmos que explicitamente decirle el valor del Booleano
 
@@ -176,6 +190,9 @@ let userLevel = 'admin';
 // Usamos htmlFor en vez de for
 <label htmlFor='email'>Email</label>
 <input name='email' type='email' />
+
+
+
 
 
 // Recursos

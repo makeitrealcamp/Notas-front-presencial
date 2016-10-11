@@ -101,36 +101,6 @@ const styles = {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // const Hola = React.createClass({
 //   render() {
 //     return (
