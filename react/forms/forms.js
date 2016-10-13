@@ -13,34 +13,34 @@
 
 
 // En este componente estamos creando dos botones. A cada uno de ellos les estamos poniendo en evento cuando les hacen click. En cada click cada boton dispara su `event handler` respectivo.
-const ButtonList = React.createClass({
-  handleAppleClick(event) { // --> Event handler de Apple, recibe el objeto evento
-    console.log('Apple was clicked', event)
-  },
-  handlePenClick(event) { // --> Event handler de pen
-    console.log('Pen was clicked', event)
-  },
-  render() {
-    return (
-      <div>
-        <h1>Botones en React</h1>
-        <button
-          onClick={this.handleAppleClick} // --> aca ponemos la referencia al event handler
-          name='Apple Button'
-          value='Apple'
-          >Apple
-        </button>
-        <button
-          // En este link puedes leer todos los eventos que hay https://facebook.github.io/react/docs/events.html
-          onClick={this.handlePenClick}
-          name='Pen Button'
-          value='Pen'
-        >Pen
-        </button>
-      </div>
-    )
-  }
-})
+// const ButtonList = React.createClass({
+//   handleAppleClick(event) { // --> Event handler de Apple, recibe el objeto evento
+//     console.log('Apple was clicked', event)
+//   },
+//   handlePenClick(event) { // --> Event handler de pen
+//     console.log('Pen was clicked', event)
+//   },
+//   render() {
+//     return (
+//       <div>
+//         <h1>Botones en React</h1>
+//         <button
+//           onClick={this.handleAppleClick} // --> aca ponemos la referencia al event handler
+//           name='Apple Button'
+//           value='Apple'
+//           >Apple
+//         </button>
+//         <button
+//           // En este link puedes leer todos los eventos que hay https://facebook.github.io/react/docs/events.html
+//           onClick={this.handlePenClick}
+//           name='Pen Button'
+//           value='Pen'
+//         >Pen
+//         </button>
+//       </div>
+//     )
+//   }
+// })
 
 /// Podras darete cuenta rapidamente que el codigo de arriba tiene un grave problema el cual es al paraecer nos toca crear un 'event handler' diferente para cada boton que creemos ya qeu cada uno imprime una cosa diferente.
 
@@ -258,6 +258,8 @@ const BetterStudentsList = React.createClass({
 
 */
 
+
+// Esta es una estrategia en donde validamos el formulario una vez el usurio hace submit de los datos.
 const StudentsListValidation = React.createClass({
   getInitialState() {
     return {
@@ -340,8 +342,138 @@ const StudentsListValidation = React.createClass({
   }
 })
 
+// Ahora miremos una estrategia en donde hacemos las validaciones no a nivel del formulario si no a nivel de cada input de forma que podemos decirle al usuario mientras escribe los valores si estos estan cumpliendo no no las validaciones:
+
+
+// Para hacer esto vamos a abstraer la logica de crear inputs en un Componente el cual vamos a llmar Field
+
+const Field = React.createClass({
+  propTypes: { // --> Aca estanos definiendo las propiedades que este componente puede recibir, esto nos ayuda a identifiacr errores y auto documentar nuestro codigo
+    placeholder: React.PropTypes.string,
+    name: React.PropTypes.string.isRequired, // --> Aca especificamos que este prop es obligatorio y el componente no puede funcionar si no se lo pasamos
+    value: React.PropTypes.string,
+    validate: React.PropTypes.func,
+    onChange: React.PropTypes.func.isRequired
+  },
+  getInitialState() {
+    return {
+      value: this.props.value,  // Tomamos lo que nos pasan en el prop value y creamos estado en base a el, tenemos que hacer esto por que el value es el que nos va a permitir que este sea un CONTROL COMPONENT
+      error: false // Esta va a ser la variable del estado que nos indica si el Field tiene un error o no.
+    }
+  },
+  componentWillReceiveProps(update) { // --> Esta es una funcion del Component Life Cycle de React, la cual va a ser invocada cada vez que el componente padre de este componente le pase nuevos props. Los nuevos props son los que estamos recibiendo como la variable 'update', y luego actualizamos el estado para mantener value actualizado.
+    this.setState({
+      value: update.value
+    })
+  },
+  handleInputChange(event) {
+    const name = this.props.name
+    const value = event.target.value // --> Sacamos el valor actual que el usuario esta escribiendo
+    const error = this.props.validate ? this.props.validate(value) : false // Veirificamos si el padre nos paso un prop validate si si invocamos esa funcion con el valor de value y guardamos lo que devuelve esa funcion en error, en caso de que no nos ayan pasado ese props dejamos el valor de error como false
+
+    this.setState({ value: value, error: error}) // Actualizamos el estado para reflejar el nuevo valor del value del input, y si tiene un error o no,
+    this.props.onChange({name: name, value: value, error: error}) //  Llamanos la funcion onChange la cual va a actualizar el estado del component padre que deberia ser el formulario
+  },
+  render() {
+    return(
+      <div>
+        <input
+          placeholder={this.props.placeholder}
+          value={this.state.value}
+          name={this.props.name}
+          onChange={this.handleInputChange}/>
+          <span style={{ color: 'red' }}>{ this.state.error }</span>
+      </div>
+    )
+  }
+})
+
+
+// Ya teniendo El componente Field lo podemos usar dentro del componente del formulario
+ const StudentsListInputLevelValidation = React.createClass({
+  getInitialState() {
+    return {
+      students: [],
+      fieldErrors: {}, // --> Ańadimos un sitio donde podamos poner los errores en el estado
+      fields: {
+        name: '',
+        email: ''
+      }
+    }
+  },
+  validate() { // --> creamos este metodo para hacer las validaciones necesarias sobre el student
+    const student = this.state.fields
+    const fieldErrors = this.state.fieldErrors
+    const errMessages = Object.keys(fieldErrors ).filter((key) => fieldErrors[key])
+
+    if (!student.name) return true
+    if (!student.email) return true
+    if (errMessages.length) return true
+
+    return false
+  },
+  handleFormSubmit(event) {
+    event.preventDefault()
+    const student = this.state.fields
+    const students = this.state.students
+
+    if (this.validate()) {
+      return
+    }
+    // Si no hay errores podemos añadir el nuevo student
+    const newStudents = [...this.state.students, student]
+    this.setState({ // Modificamos el estado para reflejar todos los cambios
+      students: newStudents,
+      fieldErrors: {},
+      fields: {
+        name: '',
+        email: ''
+      }
+    })
+  },
+  handleInputChange({name, value, error}) {
+    const fields = this.state.fields
+    const fieldErrors = this.state.fieldErrors
+    fields[name] = value
+    fieldErrors[name] = error
+    this.setState({
+      fields: fields,
+      fieldErrors: fieldErrors
+    })
+  },
+  render() {
+    return (
+      <div>
+        <h1>Lista de Estudiantes</h1>
+        <form onSubmit={this.handleFormSubmit}>
+          <Field
+            name='name'
+            validate={(val) => val ? false : 'El nombre es requerido'}
+            placeholder='Nombre'
+            value={this.state.fields.name}
+            onChange={this.handleInputChange}/>
+          <Field
+            name='email'
+            validate={(val) => val.toUpperCase() === val ? false : 'El Email tiene que estar todo en mayuscula'}
+            placeholder='Nombre'
+            value={this.state.fields.email}
+            onChange={this.handleInputChange}/>
+           <input type='submit' disabled={this.validate()} />
+        </form>
+        <ul>
+          {this.state.students.map((student, i) =>
+            <li key={i}>{student.name}: ({student.email})</li>
+          )}
+        </ul>
+      </div>
+    )
+  }
+})
 
 
 
-ReactDOM.render(<StudentsListValidation />, document.getElementById('react-container'))
+
+
+
+ReactDOM.render(<StudentsListInputLevelValidation />, document.getElementById('react-container'))
 

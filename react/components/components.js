@@ -2,6 +2,7 @@
 ///// Componentes en React /////////
 /////////////////////////////////////////////////////////
 
+
 // Un comoponente de React es un objecto de javascript que como minimo debe tener un metodo 'render'. Se espera que render devuelva un ReactElement
 
 // El objetivo de un componente es el de:
@@ -16,8 +17,8 @@
 2. props: los inputs, o parametros que reciben nuestros componentes
 3. context: Una variable global de todos nuestros componentes
 4. state: la forma en que le agregamos datos locales a nuestros componentes
-5. stateles componentes: componentes que no tienen estado
-6. children: los componentes hijos de un componente
+5. stateless componentes: componentes que no tienen estado
+6. children: los componentes o elementos hijos de un componente
 7. statics: como crear metodos de 'clase' dentro de un componente
 
 */
@@ -34,6 +35,7 @@
 
 const App = React.createClass({
   render() {
+    return
     // Metodo requerido
   }
 })
@@ -42,6 +44,7 @@ const App = React.createClass({
 
 class App extends React.Component {
   render() {
+    return
     // Metodo requerido
   }
 }
@@ -79,7 +82,6 @@ const App = React.createClass({
 // PROPS:
 
 // los props son los parametros/argumetos de nuestros componentes ej:
-
 <div>
   <Header headerText="Hola mundo" />
 </div>
@@ -110,6 +112,8 @@ const Component = React.createClass({
   },
 //...
 })
+
+
 
 // Estos son los  validadores por defecto en React:
 
@@ -172,10 +176,10 @@ const Switch = React.createClass({
   }
 })
 
-// Poner solo el estado inicial como tal no es intiresante, la magia empieza a suceder cuando usamos la referencias al estado dentro de 'render'
+// Poner solo el estado inicial como tal no es interesante, la magia empieza a suceder cuando usamos la referencias al estado dentro de 'render'
 
 
-// Este es un component stateful en donde estamos haciendo tracking de cual es el metodo preferido del usuria para hacer un pago. Pero todavia no podemos hacer que el usuario cambie esta eleccion.
+// Este es un component stateful en donde estamos haciendo tracking de cual es el metodo preferido del usuaria para hacer un pago. Pero todavia no podemos hacer que el usuario cambie esta eleccion.
 const Switch = React.createClass({
   getInitialState() {
     return {
@@ -210,7 +214,7 @@ const Switch = React.createClass({
         payMethod: choice
       })
     } // --> te puedes dar cuenta de que 'select' devuelve una funcion que tiene un clousure sobre 'choice' de esa forma podemos pasarle este argumento, otra forma de hacerlo seria usando '.bind'
-  }
+  },
   render() {
     return (
       <div>
@@ -218,7 +222,8 @@ const Switch = React.createClass({
           onClick={this.select('Credit Card')} // Event handler para este 'div'
           >Credit Card</div>
         <div className='choice'
-          onClick={this.select('Bitcoin')} // Aca ponemos el event handler para cuando le hagan click a este 'div'. Select es invocada cuando hacemos render de este componente. Ahora bien cuando el usuario hace click este invoca la funcion que devuelve select, la cual tiene un clousere sobre choice y puede usar este valor.
+          onClick={this.select('Bitcoin')}
+           // Aca ponemos el event handler para cuando le hagan click a este 'div'. Select es invocada cuando hacemos render de este componente. Ahora bien cuando el usuario hace click este invoca la funcion que devuelve select, la cual tiene un clousere sobre choice y puede usar este valor.
           >Bitcoin</div>
         Pay with: {this.state.payMethod}
       </div>
@@ -302,7 +307,6 @@ const styles = {
 // Los stateless components es la forma en que react nos deja crear componentes 'livianos' que solo necesitan de la funcion 'render' y no dependen de tener estado.
 
 // EJ:
-
 const Header = function(props) { // --> Podras notas que no usamos React.createClass, si no simplemente una funcion que recibe como argumento los props
   return (
     <h1>{props.headerText}</h1> // Como ya no hay un objeto si no simplemente una funcion accedemos a los props por medio del argumento props que es un objeto
@@ -316,6 +320,7 @@ const Header = function(props) { // --> Podras notas que no usamos React.createC
 
 
 // Como tal no podemos volver a Switch en un componente totalmente sin estado por que de alguna forma tenemos que saber cual es la seleccion actual, lo que si podemos hacer es desacoplar cada 'choice' de switch en su propio componente sin estado
+
 const Switch = React.createClass({
   getInitialState() {
     return {
