@@ -18,34 +18,34 @@
 
 
 //////// Esto es JSX
-const Algo = React.createClass({
-  render() {
-    return(
-      <div >
-        <h1>{this.props.text}</h1>
-        <h2>Soy el segundo H2</h2>
-        <div>
-          <p>Soy el p interior</p>
-          <p>Soy el segundo p interior</p>
-        </div>
-      </div>
-    )
-  }
-})
+// const Algo = React.createClass({
+//   render() {
+//     return(
+//       <div >
+//         <h1>{this.props.text}</h1>
+//         <h2>Soy el segundo H2</h2>
+//         <div>
+//           <p>Soy el p interior</p>
+//           <p>Soy el segundo p interior</p>
+//         </div>
+//       </div>
+//     )
+//   }
+// })
 
 
-ReactDOM.render(<Algo text='Vengo de aca' />, document.getElementById('react-container'))
+// ReactDOM.render(<Algo text='Vengo de aca' />, document.getElementById('react-container'))
 
 // const color = true
 
-const styles = {
-  container: {
-    color: 'green'
-  },
-  interiorP: {
-    color: 'red'
-  }
-}
+// const styles = {
+//   container: {
+//     color: 'green'
+//   },
+//   interiorP: {
+//     color: 'red'
+//   }
+// }
 
 // const Todo = React.createClass({
 //   render() {
@@ -133,90 +133,90 @@ const styles = {
 //   }
 // })
 ///////
-// DATA = ['tender la cama', 'sacar el perro', 'comer']
-
-// function ajaxRequest(callback) {
-//   setTimeout(() => {
-//     callback(DATA)
-//   }, 0)
-// }
 
 
-// const Todo = React.createClass({
-//   render() {
-//     return(
-//       React.createElement('div', null,
-//         React.createElement('p', null, this.props.text),
-//         React.createElement('button', {onClick: this.props.deleteTodo.bind(this, this.props.index)}, 'Borrar')
-//       )
-//     )
-//   }
-// })
-
-// const TodosList = React.createClass({
-//   getInitialState() {
-//     return {
-//       todos: [],
-//       loading: true
-//     }
-//   },
-//   componentDidMount() {
-//     ajaxRequest((data) => {
-//       this.setState({
-//         todos: data,
-//         loading: false
-//       })
-//     })
-//   },
-//   createTodo(event) {
-//     event.preventDefault()
-//     const newTodos = [...this.state.todos, event.target.todo.value]
-//     this.setState({
-//       todos: newTodos
-//     })
-//   },
-//   deleteTodo(index, event) {
-//     this.state.todos.splice(index, 1)
-//     this.setState({
-//       todos: this.state.todos
-//     })
-//   },
-//   render() {
-//     if (this.state.loading) {
-//       return React.createElement('h1', null, '...Loading')
-//     } else {
-//       return (
-//         React.createElement('div', {style: styles.container},
-//           React.createElement('ul', {style: styles.ul},
-//             this.state.todos.map((todo, index) => {
-//               return React.createElement('li', null, React.createElement(Todo, {text: todo, deleteTodo: this.deleteTodo, index: index}))
-//             })
-//           ),
-//           React.createElement('form', {onSubmit: this.createTodo},
-//             React.createElement('input', {type: 'text', name: 'todo'}),
-//             React.createElement('input', {type: 'submit', value: 'Crear Todo'})
-//           )
-//         )
-//       )
-//     }
-//   }
-// })
-
-// const styles = {
-//   container: {
-//     display: 'flex',
-//     color: 'green',
-//     // flexDirection: 'column',
-//     // alignContent: 'center',
-//     justifyContent: 'center'
-//   },
-//   ul: {
-//     textAlign: 'center',
-//     'listStyle': 'none'
-//   }
-// }
+const Todo = React.createClass({
+  render() {
+    return(
+      React.createElement('div', null,
+        React.createElement('p', null, this.props.text),
+        React.createElement('button', {onClick: this.props.deleteTodo.bind(this, this.props.index)}, 'Borrar')
+      )
+    )
+  }
+})
 
 
-// ReactDOM.render(React.createElement(TodosList, null), document.getElementById('react-container'))
+function ajaxRequest(callback) {
+  setTimeout(() => {
+    callback(['tender la cama', 'sacar el perro', 'comer'])
+  }, 2000)
+}
+
+const TodosList = React.createClass({
+  getInitialState() {
+    return {
+      todos: [],
+      loading: true
+    }
+  },
+  componentDidMount() {
+    ajaxRequest((data) => {
+      this.setState({
+        todos: data,
+        loading: false
+      })
+    })
+  },
+  createTodo(event) {
+    event.preventDefault()
+    const newTodos = [...this.state.todos, event.target.todo.value]
+    this.setState({
+      todos: newTodos
+    })
+  },
+  deleteTodo(index, event) {
+    this.state.todos.splice(index, 1)
+    this.setState({
+      todos: this.state.todos
+    })
+  },
+  render() {
+    if (this.state.loading) {
+      return React.createElement('h1', null, '...Loading')
+    } else {
+      return (
+        React.createElement('div', {style: styles.container},
+          React.createElement('ul', {style: styles.ul},
+            this.state.todos.map((todo, index) => {
+              return React.createElement('li', null, React.createElement(Todo, {text: todo, deleteTodo: this.deleteTodo, index: index}))
+            })
+          ),
+          React.createElement('form', {onSubmit: this.createTodo},
+            React.createElement('input', {type: 'text', name: 'todo'}),
+            React.createElement('input', {type: 'submit', value: 'Crear Todo'})
+          )
+        )
+      )
+    }
+  }
+})
+
+const styles = {
+  container: {
+    display: 'flex',
+    color: 'green',
+    // flexDirection: 'column',
+    // alignContent: 'center',
+    justifyContent: 'center'
+  },
+  ul: {
+    textAlign: 'center',
+    'listStyle': 'none'
+  }
+}
+
+
+ReactDOM.render(React.createElement(TodosList, null), document.getElementById('react-container'))
 
 

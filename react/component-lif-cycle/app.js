@@ -33,6 +33,7 @@
 
 */
 
+
 // Cuando un componente recibe Datos:
 
 // Estos son metodos del ciclo de vida que van a ser invocados cuando el componente recibe datos de alguna forma por medio de su componente Padre. Nos permiten en ese momento del tiempo realizar ejecutar codigo cuando tenemos nuevos datos.
@@ -81,7 +82,7 @@ const ChildComponent = React.createClass({
   },
   getInitialState() {
     console.log("ChildComponent - getInitialState")
-    return { dummy: "" }
+    return { dummy: this.props.text }
   },
   componentWillMount() {
     console.log("ChildComponent - componentWillMount")

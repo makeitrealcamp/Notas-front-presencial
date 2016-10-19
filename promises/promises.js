@@ -1,14 +1,19 @@
+
 // function action(callback) {
 //   setTimeout(function() {
-//     callback('Hollla')
+//     callback('Hola')
 //   }, 2000)
 // }
 
-// function sayHI
+
 
 // action(function(arg){
-//   console.log(arg)
+//   args.later(function() {
+
+//   })
 // })
+
+// action().then(function(args){})
 
 // function action(callback) {
 //   return new Promise(function(resolve, reject) {
@@ -21,14 +26,35 @@
 // action()
 //   .then(function(word) {
 //     console.log(word)
+//     return word
 //   })
+//   .then(function(word) {
+
+//   })
+//   .then()
+//   .catch(function(err) {
+
+//   })
+//   .finally()
 
 
 var fs = require('fs')
 
+// fs.readFile(filePath, function(err, file) {
+//   console.log(file)
+// })
+
+// MyreadFile('test.md')
+//   .then(function(file) {
+
+//   })
+//   .cath(function(err) {
+//     console.log(err)
+//   })
 
 
-function readFile(filePath) {
+
+function MyreadFile(filePath) {
   return new Promise(function(resolve, reject) {
     fs.readFile(filePath, function(err, file) {
       return err ? reject(err) : resolve(file.toString().trim())
@@ -37,13 +63,23 @@ function readFile(filePath) {
 }
 
 function readAllFiles() {
-  var promises = [readFile('test.md'), readFile('test.md'), readFile('test.md')]
+  var promises = [MyreadFile('test.md'), MyreadFile('test.md'), MyreadFile('test.md')]
   return Promise.all(promises)
 }
 
 readAllFiles()
   .then(function(files) {
     console.log(files)
+    const UpperFiles = files.map((file) => {
+      return file.toUpperCase()
+    })
+    return UpperFiles
+  })
+  .then(function(UpperFiles) {
+    console.log(UpperFiles)
+  })
+  .catch(function(err) {
+    console.log(err)
   })
 
 // readFile('test.md')
